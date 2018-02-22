@@ -36,7 +36,7 @@ const RecipeListing = ({
           numColumns={1}
           data={recipes}
           renderItem={({ item }) => (
-            <Card transparent style={{ paddingHorizontal: 6 }}>
+            <Card transparent style={{ paddingHorizontal: 2 }}>
               <CardItem cardBody>
                 <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1 }}>
                   <Image
