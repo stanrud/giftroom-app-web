@@ -33,7 +33,7 @@ const RecipeListing = ({
         />
 
         <FlatList
-          numColumns={2}
+          numColumns={1}
           data={recipes}
           renderItem={({ item }) => (
             <Card transparent style={{ paddingHorizontal: 6 }}>
@@ -42,7 +42,7 @@ const RecipeListing = ({
                   <Image
                     source={{ uri: item.image }}
                     style={{
-                      height: 100,
+                      height: 200,
                       width: null,
                       flex: 1,
                       borderRadius: 5,
@@ -50,6 +50,8 @@ const RecipeListing = ({
                   />
                 </TouchableOpacity>
               </CardItem>
+
+              {/*
               <CardItem cardBody>
                 <Body>
                   <Spacer size={10} />
@@ -66,6 +68,8 @@ const RecipeListing = ({
                   <Spacer size={5} />
                 </Body>
               </CardItem>
+                  */}
+
             </Card>
           )}
           keyExtractor={keyExtractor}
