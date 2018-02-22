@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, TouchableOpacity, RefreshControl, Image } from 'react-native';
-import { Container, Content, Card, CardItem, Body, Text, Button } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Text, Button, Left, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Error from './Error';
@@ -24,6 +24,9 @@ const RecipeListing = ({
 
   const onPress = item => Actions.recipe({ match: { params: { id: String(item.id) } } });
 
+  //console.log(recipes);
+
+
   return (
     <Container>
       <Content padder>
@@ -36,7 +39,7 @@ const RecipeListing = ({
           numColumns={1}
           data={recipes}
           renderItem={({ item }) => (
-            <Card transparent style={{ paddingHorizontal: 2 }}>
+            <Card transparent style={{ paddingHorizontal: 6 }}>
               <CardItem cardBody>
                 <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1 }}>
                   <Image
@@ -45,9 +48,18 @@ const RecipeListing = ({
                       height: 200,
                       width: null,
                       flex: 1,
-                      borderRadius: 5,
+                      borderRadius: 7,
                     }}
-                  />
+                  >
+                  <Left>
+                  <Body>
+                    <Button transparent>
+                      <Icon active name="thumbs-up" style={{ color: '#fff' }} />
+                      <Text style={{ color: '#fff' }} >12</Text>
+                    </Button>
+                  </Body>
+                  </Left>
+                  </Image>
                 </TouchableOpacity>
               </CardItem>
 
@@ -86,6 +98,27 @@ const RecipeListing = ({
     </Container>
   );
 };
+
+  //EXAMPLE 
+  const gifts = () => {
+  fetch('http://rudiko.com:1337/parse/classes/Posts', {
+          method: "GET",
+          headers: {
+                        'Content-Type': ' application/json',
+                        'X-Parse-Application-Id': 'myAppId',
+                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                    },
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return console.log(responseJson);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+gift = gifts();
 
 RecipeListing.propTypes = {
   error: PropTypes.string,
