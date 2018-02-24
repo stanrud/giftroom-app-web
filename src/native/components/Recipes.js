@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, TouchableOpacity, RefreshControl, Image } from 'react-native';
-import { Container, Content, Card, CardItem, Body, Text, Button, Left, Icon } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Text, Button, Left, Icon, ListItem, View, Fab } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Error from './Error';
@@ -23,9 +23,6 @@ const RecipeListing = ({
   const keyExtractor = item => item.id;
 
   const onPress = item => Actions.recipe({ match: { params: { id: String(item.id) } } });
-
-  //console.log(recipes);
-
 
   return (
     <Container>
@@ -95,30 +92,19 @@ const RecipeListing = ({
 
         <Spacer size={20} />
       </Content>
+
+          <Fab
+            active={'true'}
+            containerStyle={{}}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={Actions.addpost}>
+            <Icon name="add" />
+          </Fab>
+
     </Container>
   );
 };
-
-  //EXAMPLE 
-  const gifts = () => {
-  fetch('http://rudiko.com:1337/parse/classes/Posts', {
-          method: "GET",
-          headers: {
-                        'Content-Type': ' application/json',
-                        'X-Parse-Application-Id': 'myAppId',
-                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
-                    },
-        })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return console.log(responseJson);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-
-gift = gifts();
 
 RecipeListing.propTypes = {
   error: PropTypes.string,

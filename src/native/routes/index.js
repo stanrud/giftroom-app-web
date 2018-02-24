@@ -25,6 +25,7 @@ import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
+import AddPost from '../components/AddPost';
 
 const Index = (
   <Stack>
@@ -39,7 +40,7 @@ const Index = (
         <Stack
           key="home"
           title={AppConfig.appName.toUpperCase()}
-          icon={() => <Icon name="planet" {...DefaultProps.icons} />}
+          icon={() => <Icon ios='ios-apps-outline' android="md-apps" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="home" component={AboutComponent} />
@@ -48,10 +49,18 @@ const Index = (
         <Stack
           key="recipes"
           title="RECIPES"
-          icon={() => <Icon name="book" {...DefaultProps.icons} />}
+          icon={() => <Icon ios='ios-cube-outline' android="cube-outline" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
+        
+          <Scene
+              key="addpost"
+              title="ADDPOST"
+              {...DefaultProps.navbarProps}
+              component={AddPost}
+              Layout={AddPost}
+            />
         </Stack>
 
         <Stack
@@ -60,7 +69,11 @@ const Index = (
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="profileHome" component={MemberContainer} Layout={ProfileComponent} />
+          <Scene 
+            key="profileHome" 
+            component={MemberContainer} 
+            Layout={ProfileComponent} 
+          />
           <Scene
             back
             key="signUp"
