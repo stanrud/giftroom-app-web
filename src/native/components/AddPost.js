@@ -11,7 +11,7 @@ class AddPost extends React.Component {
   static propTypes = {
     error: PropTypes.string,
     //loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    //onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
