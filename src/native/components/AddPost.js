@@ -37,8 +37,8 @@ class AddPost extends React.Component {
           method: "GET",
           headers: {
                         'Content-Type': ' application/json',
-                        'X-Parse-Application-Id': 'myAppId',
-                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                        'X-Parse-Application-Id': '',
+                        'X-Parse-REST-API-Key': ''
                     },
         })
     .then((response) => response.json())
