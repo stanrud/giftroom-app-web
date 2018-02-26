@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Image } from 'react-native';
 import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
@@ -24,10 +25,31 @@ class AddPost extends React.Component {
       title: '',
       description: '',
       link: '',
+      projects: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    return fetch('http://rudiko.com:1337/parse/classes/Posts', {
+          method: "GET",
+          headers: {
+                        'Content-Type': ' application/json',
+                        'X-Parse-Application-Id': 'myAppId',
+                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                    },
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+              projects: responseJson.results
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   handleChange = (name, val) => {
@@ -56,6 +78,19 @@ class AddPost extends React.Component {
             title="Add the gift"
             content="Add the gift that you desire"
           />
+          {this.state.projects.map((p, i) => {
+            return (
+              <Image
+                    source={{ uri: p.file.url }}
+                    style={{
+                      height: 200,
+                      width: null,
+                      flex: 1,
+                      borderRadius: 7,
+                    }}
+              ></Image>
+            );
+          })}
 
           <Form>
             <Item stackedLabel>
