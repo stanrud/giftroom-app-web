@@ -32,29 +32,6 @@ class AddPost extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-<<<<<<< HEAD
-  componentDidMount() {
-    return fetch('http://rudiko.com:1337/parse/classes/Posts', {
-          method: "GET",
-          headers: {
-                        'Content-Type': ' application/json',
-                        'X-Parse-Application-Id': '',
-                        'X-Parse-REST-API-Key': ''
-                    },
-        })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-              projects: responseJson.results
-      });
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-
-=======
->>>>>>> changes
   handleChange = (name, val) => {
     this.setState({
       ...this.state,
