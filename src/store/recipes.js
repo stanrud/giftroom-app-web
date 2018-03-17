@@ -2,18 +2,33 @@ export default {
   loading: true,
   error: null,
   meals: [
-    { id: 1, title: '---' },
-    { id: 2, title: '----- ---' },
+    {
+      createdAt: '----',
+      description: '---- ---- -----',
+      file: {
+        __type: '----',
+        name: 'b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+        url: 'http://rudiko.com:1337/parse/files/myAppId/b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+      },
+      objectId: 0,
+      title: '-------',
+      updatedAt: '----',
+    },
   ],
   recipes: [
     {
+      objectId: '-----',
+      createdAt: '----',
       placeholder: true,
-      id: 0,
       title: '---- --- -- ------',
-      body: '---- --- -- ------ ---- --- -- ------ ---- --- -- ------ ---- --- -- ------',
+      description: '---- --- -- ------ ---- --- -- ------ ---- --- -- ------ ---- --- -- ------',
       author: '---- ------ ',
       category: 1,
-      image: 'https://firebasestorage.googleapis.com/v0/b/react-native-starter-app.appspot.com/o/image-1.jpg?alt=media&token=9f7c839b-2d40-4660-a2a0-bf6c2f64a2e5',
+      file: {
+        __type: '----',
+        name: 'b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+        url: 'http://rudiko.com:1337/parse/files/myAppId/b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+      },
       ingredients: [
         '---- --- -- ------',
         '---- ------ --- --',
@@ -22,6 +37,7 @@ export default {
         '---- --- -- ------',
         '---- ------ --- --',
       ],
+      updatedAt: '----',
     },
   ],
   favourites: [],

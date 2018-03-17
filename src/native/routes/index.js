@@ -34,7 +34,9 @@ const Index = (
         key="tabbar"
         swipeEnabled
         type="replace"
+        tabBarPosition="bottom"
         showLabel={false}
+
         {...DefaultProps.tabProps}
       >
         <Stack
@@ -49,7 +51,7 @@ const Index = (
         <Stack
           key="recipes"
           title="RECIPES"
-          icon={() => <Icon ios='ios-cube-outline' android="cube-outline" {...DefaultProps.icons} />}
+          icon={() => <Icon ios='ios-cube-outline' android="md-cube" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />

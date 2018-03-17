@@ -47,6 +47,34 @@ export function replaceFavourites(newFavourites) {
   * Get Meals
   */
 export function getMeals() {
+
+  return function action(dispatch) {
+    dispatch({ type: 'MEALS_REPLACE' })
+
+    const request = fetch('http://rudiko.com:1337/parse/classes/Posts', {
+          method: "GET",
+          headers: {
+                        'Content-Type': ' application/json',
+                        'X-Parse-Application-Id': 'myAppId',
+                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                    },
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson;
+    });
+    
+    return request.then(
+      response => dispatch({
+        type: 'MEALS_REPLACE',
+        data: response.results,
+      }),
+      err => dispatch(fetchOffersError(err))
+    );
+  }
+
+
+  /*
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
   return dispatch => new Promise((resolve, reject) => FirebaseRef
@@ -59,6 +87,7 @@ export function getMeals() {
         data: meals,
       }));
     }).catch(reject)).catch(e => console.log(e));
+  */
 }
 
 /**
@@ -75,15 +104,26 @@ export function setError(message) {
   * Get Recipes
   */
 export function getRecipes() {
-  if (Firebase === null) return () => new Promise(resolve => resolve());
-
-  return dispatch => new Promise(resolve => FirebaseRef.child('recipes')
-    .on('value', (snapshot) => {
-      const recipes = snapshot.val() || {};
-
-      return resolve(dispatch({
+  return function action(dispatch) {
+    const request = fetch('http://rudiko.com:1337/parse/classes/Posts', {
+          method: "GET",
+          headers: {
+                        'Content-Type': ' application/json',
+                        'X-Parse-Application-Id': 'myAppId',
+                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                    },
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson;
+    });
+    
+    return request.then(
+      response => dispatch({
         type: 'RECIPES_REPLACE',
-        data: recipes,
-      }));
-    })).catch(e => console.log(e));
+        data: response.results,
+      }),
+      err => dispatch(fetchOffersError(err))
+    );
+  }
 }

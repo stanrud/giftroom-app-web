@@ -30,11 +30,11 @@ export default function recipeReducer(state = initialState, action) {
       // Pick out the props I need
       if (action.data && typeof action.data === 'object') {
         recipes = action.data.map(item => ({
-          id: item.id,
+          id: item.objectId,
           title: item.title,
-          body: item.body,
+          description: item.description,
           category: item.category,
-          image: item.image,
+          image: item.file.url,
           author: item.author,
           ingredients: item.ingredients,
           method: item.method,

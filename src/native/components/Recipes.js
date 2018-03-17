@@ -13,6 +13,7 @@ const RecipeListing = ({
   loading,
   recipes,
   reFetch,
+  meals
 }) => {
   // Loading
   if (loading) return <Loading />;
@@ -20,6 +21,7 @@ const RecipeListing = ({
   // Error
   if (error) return <Error content={error} />;
 
+  console.log();
   const keyExtractor = item => item.id;
 
   const onPress = item => Actions.recipe({ match: { params: { id: String(item.id) } } });
@@ -36,7 +38,7 @@ const RecipeListing = ({
           numColumns={1}
           data={recipes}
           renderItem={({ item }) => (
-            <Card transparent style={{ paddingHorizontal: 6 }}>
+            <Card transparent style={{ paddingHorizontal: 6 }} key={item.id}>
               <CardItem cardBody>
                 <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1 }}>
                   <Image

@@ -17,12 +17,11 @@ const RecipeView = ({
   // Get this Recipe from all recipes
   let recipe = null;
   if (recipeId && recipes) {
-    recipe = recipes.find(item => parseInt(item.id, 10) === parseInt(recipeId, 10));
+    recipe = recipes.find(item => item.id === recipeId);
   }
 
   // Recipe not found
   if (!recipe) return <Error content={ErrorMessages.recipe404} />;
-
   // Build Ingredients listing
   const ingredients = recipe.ingredients.map(item => (
     <ListItem key={item} rightIcon={{ style: { opacity: 0 } }}>
@@ -53,7 +52,7 @@ const RecipeView = ({
           </CardItem>
           <CardItem>
             <Body>
-              <Text>{recipe.body}</Text>
+              <Text>{recipe.description}</Text>
             </Body>
           </CardItem>
         </Card>
