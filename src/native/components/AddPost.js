@@ -32,6 +32,7 @@ class AddPost extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+<<<<<<< HEAD
   componentDidMount() {
     return fetch('http://rudiko.com:1337/parse/classes/Posts', {
           method: "GET",
@@ -52,6 +53,8 @@ class AddPost extends React.Component {
     });
   }
 
+=======
+>>>>>>> changes
   handleChange = (name, val) => {
     this.setState({
       ...this.state,
@@ -61,7 +64,7 @@ class AddPost extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.recipes())
+      .then(() => Actions.posts())
       .catch(e => console.log(`Error: ${e}`));
   }
 
@@ -78,20 +81,6 @@ class AddPost extends React.Component {
             title="Add the gift"
             content="Add the gift that you desire"
           />
-          {this.state.projects.map((p, i) => {
-            return (
-              <Image
-                    source={{ uri: p.file.url }}
-                    style={{
-                      height: 200,
-                      width: null,
-                      flex: 1,
-                      borderRadius: 7,
-                    }}
-              ></Image>
-            );
-          })}
-
           <Form>
             <Item stackedLabel>
               <Label>Title</Label>

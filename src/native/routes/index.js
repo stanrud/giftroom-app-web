@@ -5,9 +5,9 @@ import { Icon } from 'native-base';
 import DefaultProps from '../constants/navigation';
 import AppConfig from '../../constants/config';
 
-import RecipesContainer from '../../containers/Recipes';
-import RecipesComponent from '../components/Recipes';
-import RecipeViewComponent from '../components/Recipe';
+import PostsContainer from '../../containers/Posts';
+import PostsComponent from '../components/Posts';
+import PostViewComponent from '../components/Post';
 
 import SignUpContainer from '../../containers/SignUp';
 import SignUpComponent from '../components/SignUp';
@@ -34,7 +34,9 @@ const Index = (
         key="tabbar"
         swipeEnabled
         type="replace"
+        tabBarPosition="bottom"
         showLabel={false}
+
         {...DefaultProps.tabProps}
       >
         <Stack
@@ -47,12 +49,12 @@ const Index = (
         </Stack>
 
         <Stack
-          key="recipes"
-          title="RECIPES"
-          icon={() => <Icon ios='ios-cube-outline' android="cube-outline" {...DefaultProps.icons} />}
+          key="posts"
+          title="POSTS"
+          icon={() => <Icon ios='ios-cube-outline' android="md-cube" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
+          <Scene key="posts" component={PostsContainer} Layout={PostsComponent} />
         
           <Scene
               key="addpost"
@@ -113,11 +115,11 @@ const Index = (
     <Scene
       back
       clone
-      key="recipe"
-      title="RECIPE"
+      key="post"
+      title="POST"
       {...DefaultProps.navbarProps}
-      component={RecipesContainer}
-      Layout={RecipeViewComponent}
+      component={PostsContainer}
+      Layout={PostViewComponent}
     />
   </Stack>
 );

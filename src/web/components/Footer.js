@@ -6,7 +6,7 @@ const Footer = () => (
     <Row>
       <Col sm="12" className="text-right pt-3">
         <p>
-          Learn More on the <a target="_blank" rel="noopener noreferrer" href="https://github.com/mcnamee/react-native-starter-kit">Github Repo</a> &nbsp; | &nbsp; Written and Maintained by <a target="_blank" rel="noopener noreferrer" href="https://mcnam.ee">Matt Mcnamee</a>.
+          More details on the <a target="_blank" rel="noopener noreferrer" href="https://github.com/stanrud/giftroom-app-web">Github Repo</a> &nbsp; | &nbsp; Developed by <a target="_blank" rel="noopener noreferrer" href="http://stanrud.com">Stan Rud</a>.
         </p>
       </Col>
     </Row>
