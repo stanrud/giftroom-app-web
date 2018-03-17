@@ -15,7 +15,7 @@ export default {
       updatedAt: '----',
     },
   ],
-  recipes: [
+  posts: [
     {
       objectId: '-----',
       createdAt: '----',

@@ -1,7 +1,7 @@
 import { Firebase, FirebaseRef } from '../lib/firebase';
 
 /**
-  * Get this User's Favourite Recipes
+  * Get this User's Favourite posts
   */
 export function getFavourites(dispatch) {
   if (Firebase === null) return () => new Promise(resolve => resolve());
@@ -22,7 +22,7 @@ export function getFavourites(dispatch) {
 }
 
 /**
-  * Reset a User's Favourite Recipes in Redux (eg for logou)
+  * Reset a User's Favourite posts in Redux (eg for logou)
   */
 export function resetFavourites(dispatch) {
   return dispatch({
@@ -32,7 +32,7 @@ export function resetFavourites(dispatch) {
 }
 
 /**
-  * Update My Favourites Recipes
+  * Update My Favourites posts
   */
 export function replaceFavourites(newFavourites) {
   if (Firebase === null) return () => new Promise(resolve => resolve());
@@ -72,22 +72,6 @@ export function getMeals() {
       err => dispatch(fetchOffersError(err))
     );
   }
-
-
-  /*
-  if (Firebase === null) return () => new Promise(resolve => resolve());
-
-  return dispatch => new Promise((resolve, reject) => FirebaseRef
-    .child('meals').once('value')
-    .then((snapshot) => {
-      const meals = snapshot.val() || {};
-
-      return resolve(dispatch({
-        type: 'MEALS_REPLACE',
-        data: meals,
-      }));
-    }).catch(reject)).catch(e => console.log(e));
-  */
 }
 
 /**
@@ -95,15 +79,15 @@ export function getMeals() {
   */
 export function setError(message) {
   return dispatch => new Promise(resolve => resolve(dispatch({
-    type: 'RECIPES_ERROR',
+    type: 'POSTS_ERROR',
     data: message,
   })));
 }
 
 /**
-  * Get Recipes
+  * Get posts
   */
-export function getRecipes() {
+export function getPosts() {
   return function action(dispatch) {
     const request = fetch('http://rudiko.com:1337/parse/classes/Posts', {
           method: "GET",
@@ -120,7 +104,7 @@ export function getRecipes() {
     
     return request.then(
       response => dispatch({
-        type: 'RECIPES_REPLACE',
+        type: 'POSTS_REPLACE',
         data: response.results,
       }),
       err => dispatch(fetchOffersError(err))

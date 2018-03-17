@@ -8,10 +8,10 @@ import Error from './Error';
 import Header from './Header';
 import Spacer from './Spacer';
 
-const RecipeListing = ({
+const PostListing = ({
   error,
   loading,
-  recipes,
+  posts,
   reFetch,
   meals
 }) => {
@@ -24,7 +24,7 @@ const RecipeListing = ({
   console.log();
   const keyExtractor = item => item.id;
 
-  const onPress = item => Actions.recipe({ match: { params: { id: String(item.id) } } });
+  const onPress = item => Actions.post({ match: { params: { id: String(item.id) } } });
 
   return (
     <Container>
@@ -36,7 +36,7 @@ const RecipeListing = ({
 
         <FlatList
           numColumns={1}
-          data={recipes}
+          data={posts}
           renderItem={({ item }) => (
             <Card transparent style={{ paddingHorizontal: 6 }} key={item.id}>
               <CardItem cardBody>
@@ -74,7 +74,7 @@ const RecipeListing = ({
                     small
                     onPress={() => onPress(item)}
                   >
-                    <Text>View Recipe</Text>
+                    <Text>View Post</Text>
                   </Button>
                   <Spacer size={5} />
                 </Body>
@@ -108,16 +108,16 @@ const RecipeListing = ({
   );
 };
 
-RecipeListing.propTypes = {
+PostListing.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   reFetch: PropTypes.func,
 };
 
-RecipeListing.defaultProps = {
+PostListing.defaultProps = {
   error: null,
   reFetch: null,
 };
 
-export default RecipeListing;
+export default PostListing;
