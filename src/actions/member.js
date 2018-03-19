@@ -39,8 +39,8 @@ export function signUp(formData) {
       user.set("email", email);
 
       user.signUp(null, {
-        success: (user) => {
-          statusMessage(dispatch, 'loading', false);
+        success: async (user) => {
+          await statusMessage(dispatch, 'loading', false);
           return resolve();
         },
         error: (user, error) => {
@@ -100,10 +100,10 @@ export function login(formData) {
 
     //Go to PARSE
     return Parse.User.logIn(email, password, {
-      success: (user) => {
+      success: async (user) => {
 
-        getUserData(dispatch);
-        statusMessage(dispatch, 'loading', false);
+        await getUserData(dispatch);
+        await statusMessage(dispatch, 'loading', false);
         // Send Login data to Redux
         var userData = JSON.stringify(user);
         userData = JSON.parse(userData);
@@ -135,10 +135,10 @@ export function resetPassword(formData) {
 
     // Go to PARSE
     Parse.User.requestPasswordReset(email, {
-      success: function() {
+      success: async function() {
         // Password reset request was sent successfully
         console.log("reset passss");
-        statusMessage(dispatch, 'loading', false);      
+        await statusMessage(dispatch, 'loading', false);      
         return resolve(dispatch({ type: 'USER_RESET' }));
       },
       error: function(error) {

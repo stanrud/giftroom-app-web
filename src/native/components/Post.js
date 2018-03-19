@@ -23,6 +23,8 @@ const PostView = ({
   // Post not found
   if (!post) return <Error content={ErrorMessages.post404} />;
   // Build Ingredients listing
+  if (!post.ingredients) return <Error content={ErrorMessages.post404} />;
+  
   const ingredients = post.ingredients.map(item => (
     <ListItem key={item} rightIcon={{ style: { opacity: 0 } }}>
       <Text>{item}</Text>

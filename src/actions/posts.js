@@ -1,4 +1,7 @@
 import { Firebase, FirebaseRef } from '../lib/firebase';
+import ErrorMessages from '../constants/errors';
+import statusMessage from './status';
+
 import { AsyncStorage } from 'react-native';
 var Parse = require('parse/react-native');
 Parse.setAsyncStorage(AsyncStorage);
@@ -66,13 +69,14 @@ export function getMeals() {
         })
     .then((response) => response.json())
     .then((responseJson) => {
+      responseJson = responseJson.results.reverse();
       return responseJson;
     });
     
     return request.then(
       response => dispatch({
         type: 'MEALS_REPLACE',
-        data: response.results,
+        data: response,
       }),
       err => dispatch(fetchOffersError(err))
     );
@@ -125,21 +129,39 @@ export function addPost(formData) {
     title,
     description,
     author,
+    image,
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
+    //Validations
+    if (!title) return reject({ message: ErrorMessages.missingTitle });
+    if (!image.base64) return reject({ message: ErrorMessages.missingImage });
+    
+    await statusMessage(dispatch, 'loading', true);
+
+    //File uploading
+    let parseFile = new Parse.File("gift.jpg", { base64: image.base64 });
+
+    parseFile.save().then(function() {
+      // The file has been saved to Parse.
+      console.log('File uploaded');
+    }, function(error) {
+      // The file either could not be read, or could not be saved to Parse.
+      console.log(error.message);
+    });
     // Validation checks
     var Post = Parse.Object.extend("Posts");
     var post = new Post();
-
+    //Add post
     post.set("title", title);
     post.set("description", description);
     post.set("author", author);
+    post.set("file", parseFile);
 
     post.save(null, {
-      success: (response) => {
-        console.log("ADDED !! !!");
-        statusMessage(dispatch, 'loading', false);
+      success: async (response) => {
+        console.log("Post added");
+        await statusMessage(dispatch, 'loading', false);
         return resolve();
       },
       error: (user, error) => {
@@ -147,5 +169,5 @@ export function addPost(formData) {
         console.log("Error: " + error.code + " " + error.message);
       }
     }).catch(reject);
-  }).catch(async (err) => { throw err.message; });
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }

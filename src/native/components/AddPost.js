@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
-import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
+import { Container, Content, Text, Form, Item, Label, Input, Button, View } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
+import { ImagePicker } from 'expo';
 
 class AddPost extends React.Component {
   static propTypes = {
@@ -25,6 +26,9 @@ class AddPost extends React.Component {
       title: '',
       description: '',
       author: '',
+      image: { uri: 'https://i.pinimg.com/originals/d1/37/5f/d1375f83853416fd628157529771142e.jpg', 
+            base64: null 
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -46,7 +50,7 @@ class AddPost extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-
+    let { image } = this.state;
     // Loading
     //if (loading) return <Loading />;
 
@@ -58,6 +62,15 @@ class AddPost extends React.Component {
             content="Add the gift that you desire"
           />
           <Form>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width: 200, height: 200 }}>
+                <Button
+                  title="Pick an image from camera roll"
+                  onPress={this._pickImage}
+                >
+                  {image &&
+                  <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
+                </Button>
+              </View>
             <Item stackedLabel>
               <Label>Title</Label>
               <Input onChangeText={v => this.handleChange('title', v)} />
@@ -73,6 +86,8 @@ class AddPost extends React.Component {
             </Item>
 
             <Spacer size={20} />
+            
+              {error && <Messages message={error} />}
 
             <Button block onPress={this.handleSubmit}>
               <Text>Add</Text>
@@ -82,6 +97,22 @@ class AddPost extends React.Component {
       </Container>
     );
   }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true,
+    });
+
+    //console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ 
+        image: { uri: result.uri, base64: result.base64 }
+      });
+    }
+  };
 }
 
 export default AddPost;

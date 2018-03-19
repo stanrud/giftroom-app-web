@@ -18,4 +18,6 @@ export default {
   // posts
   recipe404: 'Recipe not found',
   missingMealId: 'Missing meal definition',
+  missingTitle: 'Title is missing',
+  missingImage: 'Image is missing',
 };
