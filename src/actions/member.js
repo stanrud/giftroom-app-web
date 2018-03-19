@@ -2,8 +2,14 @@ import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 
+import { AsyncStorage } from 'react-native';
+var Parse = require('parse/react-native');
+Parse.setAsyncStorage(AsyncStorage);
+Parse.initialize("myAppId", "QWERTY!@#$%^");
+Parse.serverURL = "http://rudiko.com:1337/parse";
+
 /**
-  * Sign Up to Firebase
+  * Sign Up to Parse
   */
 export function signUp(formData) {
   const {
@@ -25,42 +31,35 @@ export function signUp(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    // Go to Firebase
-    return Firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        // Send user details to Firebase database
-        if (res && res.uid) {
-          FirebaseRef.child(`users/${res.uid}`).set({
-            firstName,
-            lastName,
-            signedUp: Firebase.database.ServerValue.TIMESTAMP,
-            lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-          }).then(() => statusMessage(dispatch, 'loading', false).then(resolve));
+    var user = new Parse.User();
+      user.set("username", firstName);
+      user.set("firstName", firstName);
+      user.set("lastName", firstName);
+      user.set("password", password);
+      user.set("email", email);
+
+      user.signUp(null, {
+        success: (user) => {
+          statusMessage(dispatch, 'loading', false);
+          return resolve();
+        },
+        error: (user, error) => {
+          // Show the error message somewhere and let the user try again.
+          alert("Error: " + error.code + " " + error.message);
         }
       }).catch(reject);
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+    }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
-
 /**
   * Get this User's Details
   */
 function getUserData(dispatch) {
-  const UID = (
-    FirebaseRef
-    && Firebase
-    && Firebase.auth()
-    && Firebase.auth().currentUser
-    && Firebase.auth().currentUser.uid
-  ) ? Firebase.auth().currentUser.uid : null;
-
-  if (!UID) return false;
-
-  const ref = FirebaseRef.child(`users/${UID}`);
-
-  return ref.on('value', (snapshot) => {
-    const userData = snapshot.val() || [];
-
+  
+  //Go to PARSE
+  return Parse.User.currentAsync().then(function(user) {
+    // do stuff with your user
+    var userData = JSON.stringify(user);
+    userData = JSON.parse(userData);
     return dispatch({
       type: 'USER_DETAILS_UPDATE',
       data: userData,
@@ -99,38 +98,26 @@ export function login(formData) {
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
 
-    // Go to Firebase
-    return Firebase.auth()
-      .setPersistence(Firebase.auth.Auth.Persistence.LOCAL)
-      .then(() =>
-        Firebase.auth()
-          .signInWithEmailAndPassword(email, password)
-          .then(async (res) => {
-            if (res && res.uid) {
-              // Update last logged in data
-              FirebaseRef.child(`users/${res.uid}`).update({
-                lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-              });
+    //Go to PARSE
+    return Parse.User.logIn(email, password, {
+      success: (user) => {
 
-              // Send verification Email when email hasn't been verified
-              if (res.emailVerified === false) {
-                Firebase.auth().currentUser
-                  .sendEmailVerification()
-                  .catch(() => console.log('Verification email failed to send'));
-              }
+        getUserData(dispatch);
+        statusMessage(dispatch, 'loading', false);
+        // Send Login data to Redux
+        var userData = JSON.stringify(user);
+        userData = JSON.parse(userData);
 
-              // Get User Data
-              getUserData(dispatch);
-            }
-
-            await statusMessage(dispatch, 'loading', false);
-
-            // Send Login data to Redux
-            return resolve(dispatch({
-              type: 'USER_LOGIN',
-              data: res,
-            }));
-          }).catch(reject));
+        return resolve(dispatch({
+          type: 'USER_LOGIN',
+          data: userData,
+        }));
+      },
+      error: (user, error) => {
+        // The login failed. Check error to see why.
+        console.log(error);
+      }
+    }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
@@ -146,11 +133,19 @@ export function resetPassword(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    // Go to Firebase
-    return Firebase.auth()
-      .sendPasswordResetEmail(email)
-      .then(() => statusMessage(dispatch, 'loading', false).then(resolve(dispatch({ type: 'USER_RESET' }))))
-      .catch(reject);
+    // Go to PARSE
+    Parse.User.requestPasswordReset(email, {
+      success: function() {
+        // Password reset request was sent successfully
+        console.log("reset passss");
+        statusMessage(dispatch, 'loading', false);      
+        return resolve(dispatch({ type: 'USER_RESET' }));
+      },
+      error: function(error) {
+        // Show the error message somewhere
+        alert("Error: " + error.code + " " + error.message);
+      }
+    }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
@@ -213,7 +208,8 @@ export function updateProfile(formData) {
   */
 export function logout() {
   return dispatch => new Promise((resolve, reject) => {
-    Firebase.auth().signOut()
+    //Go to PARSE
+    Parse.User.logOut()
       .then(() => {
         dispatch({ type: 'USER_RESET' });
         setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message

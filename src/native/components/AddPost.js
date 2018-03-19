@@ -11,8 +11,8 @@ import Spacer from './Spacer';
 class AddPost extends React.Component {
   static propTypes = {
     error: PropTypes.string,
-    //loading: PropTypes.bool.isRequired,
-    //onFormSubmit: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -24,8 +24,7 @@ class AddPost extends React.Component {
     this.state = {
       title: '',
       description: '',
-      link: '',
-      projects: [],
+      author: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -63,18 +62,13 @@ class AddPost extends React.Component {
               <Label>Title</Label>
               <Input onChangeText={v => this.handleChange('title', v)} />
             </Item>
-
             <Item stackedLabel>
               <Label>Description</Label>
               <Input onChangeText={v => this.handleChange('description', v)} />
             </Item>
-
             <Item stackedLabel>
-              <Label>Link</Label>
-              <Input
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={v => this.handleChange('link', v)}
+              <Label>Author</Label>
+              <Input onChangeText={v => this.handleChange('author', v)}
               />
             </Item>
 
@@ -89,35 +83,5 @@ class AddPost extends React.Component {
     );
   }
 }
-
-
-
-  //EXAMPLE 
-  const gifts = async () => {
-  return fetch('http://rudiko.com:1337/parse/classes/Posts', {
-          method: "GET",
-          headers: {
-                        'Content-Type': ' application/json',
-                        'X-Parse-Application-Id': 'myAppId',
-                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
-                    },
-        })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson.results;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-
-  const printData = async () => {
-    try {
-      const json = await gifts()
-      console.log(json)
-    } catch(e) {f
-      console.error("Problem", e)
-    }
-  }
 
 export default AddPost;

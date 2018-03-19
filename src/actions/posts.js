@@ -1,4 +1,9 @@
 import { Firebase, FirebaseRef } from '../lib/firebase';
+import { AsyncStorage } from 'react-native';
+var Parse = require('parse/react-native');
+Parse.setAsyncStorage(AsyncStorage);
+Parse.initialize("myAppId", "QWERTY!@#$%^");
+Parse.serverURL = "http://rudiko.com:1337/parse";
 
 /**
   * Get this User's Favourite posts
@@ -92,9 +97,9 @@ export function getPosts() {
     const request = fetch('http://rudiko.com:1337/parse/classes/Posts', {
           method: "GET",
           headers: {
-                        'Content-Type': ' application/json',
-                        'X-Parse-Application-Id': 'myAppId',
-                        'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
+                    'Content-Type': ' application/json',
+                    'X-Parse-Application-Id': 'myAppId',
+                    'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
                     },
         })
     .then((response) => response.json())
@@ -110,4 +115,37 @@ export function getPosts() {
       err => dispatch(fetchOffersError(err))
     );
   }
+}
+
+/**
+  * Add post
+  */
+export function addPost(formData) {
+  const {
+    title,
+    description,
+    author,
+  } = formData;
+
+  return dispatch => new Promise(async (resolve, reject) => {
+    // Validation checks
+    var Post = Parse.Object.extend("Posts");
+    var post = new Post();
+
+    post.set("title", title);
+    post.set("description", description);
+    post.set("author", author);
+
+    post.save(null, {
+      success: (response) => {
+        console.log("ADDED !! !!");
+        statusMessage(dispatch, 'loading', false);
+        return resolve();
+      },
+      error: (user, error) => {
+        // Show the error message somewhere and let the user try again.
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    }).catch(reject);
+  }).catch(async (err) => { throw err.message; });
 }

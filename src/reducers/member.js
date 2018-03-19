@@ -10,7 +10,7 @@ export default function userReducer(state = initialState, action) {
           ...state,
           loading: false,
           error: null,
-          uid: action.data.uid,
+          uid: action.data.objectId,
           email: action.data.email,
           emailVerified: action.data.emailVerified,
         };
@@ -25,8 +25,8 @@ export default function userReducer(state = initialState, action) {
           error: null,
           firstName: action.data.firstName,
           lastName: action.data.lastName,
-          signedUp: action.data.signedUp,
-          role: action.data.role,
+          signedUp: action.data.updatedAt,
+          role: action.data.ACL,
         };
       }
       return initialState;

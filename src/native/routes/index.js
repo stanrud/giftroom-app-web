@@ -25,7 +25,8 @@ import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
-import AddPost from '../components/AddPost';
+import AddPostContainer from '../../containers/AddPost';
+import AddPostComponent from '../components/AddPost';
 
 const Index = (
   <Stack>
@@ -60,8 +61,8 @@ const Index = (
               key="addpost"
               title="ADDPOST"
               {...DefaultProps.navbarProps}
-              component={AddPost}
-              Layout={AddPost}
+              component={AddPostContainer}
+              Layout={AddPostComponent}
             />
         </Stack>
 
