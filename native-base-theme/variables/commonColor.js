@@ -44,7 +44,7 @@ export default {
   checkboxTickColor: '#fff',
 
   // Segment
-  segmentBackgroundColor: '#3F51B5',
+  segmentBackgroundColor: '#555',
   segmentActiveBackgroundColor: '#fff',
   segmentTextColor: '#fff',
   segmentActiveTextColor: '#3F51B5',
@@ -112,7 +112,7 @@ export default {
   cardDefaultBg: '#fff',
 
   // Color
-  brandPrimary: '#473BE7',
+  brandPrimary: '#9ef9d3',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -137,11 +137,11 @@ export default {
 
   // Footer
   footerHeight: isIphoneX ? 89 : 55,
-  footerDefaultBg: '#2874F0',
+  footerDefaultBg: '#555',
   footerPaddingBottom: isIphoneX ? 34 : 0,
 
   // FooterTab
-  tabBarTextColor: '#8bb3f4',
+  tabBarTextColor: '#555',
   tabBarTextSize: platform === 'ios' ? 14 : 11,
   activeTab: platform === 'ios' ? '#007aff' : '#fff',
   sTabBarActiveTextColor: '#007aff',
@@ -255,14 +255,14 @@ export default {
 
   // Text
   textColor: '#555',
-  inverseTextColor: '#fff',
+  inverseTextColor: '#555',
   noteFontSize: 14,
 
   // Title
   titleFontfamily: platform === 'ios' ? 'System' : 'Roboto',
   titleFontSize: platform === 'ios' ? 17 : 19,
   subTitleFontSize: platform === 'ios' ? 12 : 14,
-  subtitleColor: '#FFF',
+  subtitleColor: '#fff',
 
   // New Variable
   titleFontColor: '#FFF',

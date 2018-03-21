@@ -52,7 +52,7 @@ class AddPost extends React.Component {
     const { loading, error } = this.props;
     let { image } = this.state;
     // Loading
-    //if (loading) return <Loading />;
+    if (loading) return <Loading />;
 
     return (
       <Container>
@@ -62,15 +62,12 @@ class AddPost extends React.Component {
             content="Add the gift that you desire"
           />
           <Form>
+            <Item onPress={this._pickImage} >
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width: 200, height: 200 }}>
-                <Button
-                  title="Pick an image from camera roll"
-                  onPress={this._pickImage}
-                >
-                  {image &&
-                  <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
-                </Button>
+                {image &&
+                <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
               </View>
+            </Item>
             <Item stackedLabel>
               <Label>Title</Label>
               <Input onChangeText={v => this.handleChange('title', v)} />
@@ -86,8 +83,8 @@ class AddPost extends React.Component {
             </Item>
 
             <Spacer size={20} />
-            
               {error && <Messages message={error} />}
+            <Spacer size={20} />
 
             <Button block onPress={this.handleSubmit}>
               <Text>Add</Text>

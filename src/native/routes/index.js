@@ -24,7 +24,9 @@ import UpdateProfileComponent from '../components/UpdateProfile';
 import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
-import AboutComponent from '../components/About';
+import HomeContainer from '../../containers/Posts';
+import HomeComponent from '../components/Home';
+
 import AddPostContainer from '../../containers/AddPost';
 import AddPostComponent from '../components/AddPost';
 
@@ -38,21 +40,22 @@ const Index = (
         tabBarPosition="bottom"
         showLabel={false}
 
+
         {...DefaultProps.tabProps}
       >
         <Stack
           key="home"
           title={AppConfig.appName.toUpperCase()}
-          icon={() => <Icon ios='ios-apps-outline' android="md-apps" {...DefaultProps.icons} />}
+          icon={() => <Icon ios='ios-people-outline' android="md-people" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="home" component={AboutComponent} />
+          <Scene key="home" component={HomeContainer} Layout={HomeComponent}/>
         </Stack>
 
         <Stack
           key="posts"
           title="POSTS"
-          icon={() => <Icon ios='ios-cube-outline' android="md-cube" {...DefaultProps.icons} />}
+          icon={() => <Icon ios='ios-list-box-outline' android="md-list-box" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="posts" component={PostsContainer} Layout={PostsComponent} />

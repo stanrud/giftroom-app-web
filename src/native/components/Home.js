@@ -26,18 +26,16 @@ const PostListing = ({
 
   const onPress = item => Actions.post({ match: { params: { id: String(item.id) } } });
 
-  this.state = {refreshing: false};
-
   return (
     <Container>
       <Content padder>
         <Header
-          title="GiftRoom"
-          content="All your desired gifts are displayed here"
+          title="FEED"
+          content="Find your friends"
         />
 
         <FlatList
-          numColumns={2}
+          numColumns={1}
           data={posts}
           renderItem={({ item }) => (
             <Card transparent style={{ paddingHorizontal: 6 }} key={item.id}>
@@ -52,12 +50,22 @@ const PostListing = ({
                       borderRadius: 9,
                     }}
                   >
+                  <Left>
                   <Body>
-                  <Spacer size={10} />
                     <Button transparent>
-                      <Text style={{ color: '#fff', fontWeight: '800' }}>{item.title}</Text>
+                      <Thumbnail source={{uri: 'https://avatars3.githubusercontent.com/u/7645498?s=460&v=4'}} />
+                      <Text style={{ color: '#fff' }}>Stan Rud</Text>
                     </Button>
                   </Body>
+                  </Left>
+                  <Left>
+                    <Body>
+                      <Button transparent>
+                        <Icon active name="thumbs-up" style={{ color: '#fff' }} />
+                        <Text style={{ color: '#fff' }} >12</Text>
+                      </Button>
+                    </Body>
+                  </Left>
                   </Image>
                 </TouchableOpacity>
               </CardItem>
@@ -86,25 +94,13 @@ const PostListing = ({
           keyExtractor={keyExtractor}
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.setState({refreshing: true})}
-              
+              refreshing={loading}
+              onRefresh={reFetch}
             />
           }
         />
-
         <Spacer size={20} />
       </Content>
-
-          <Fab
-            active={'true'}
-            containerStyle={{}}
-            style={{ backgroundColor: '#555' }}
-            position="bottomRight"
-            onPress={Actions.addpost}>
-            <Icon name="add" style={{ color: '#fff' }} />
-          </Fab>
-
     </Container>
   );
 };

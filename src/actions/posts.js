@@ -136,13 +136,13 @@ export function addPost(formData) {
     //Validations
     if (!title) return reject({ message: ErrorMessages.missingTitle });
     if (!image.base64) return reject({ message: ErrorMessages.missingImage });
-    
+
     await statusMessage(dispatch, 'loading', true);
 
     //File uploading
     let parseFile = new Parse.File("gift.jpg", { base64: image.base64 });
 
-    parseFile.save().then(function() {
+    await parseFile.save().then(function() {
       // The file has been saved to Parse.
       console.log('File uploaded');
     }, function(error) {
