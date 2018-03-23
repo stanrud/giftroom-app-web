@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar, Platform,Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router, Stack } from 'react-native-router-flux';
@@ -36,5 +36,6 @@ Root.propTypes = {
   store: PropTypes.shape({}).isRequired,
   persistor: PropTypes.shape({}).isRequired,
 };
+
 
 export default Root;

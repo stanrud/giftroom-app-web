@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getPosts, getMeals, setError } from '../actions/posts';
+import { getPosts, getMeals, setError, getAllPosts } from '../actions/posts';
 
 class PostListing extends Component {
   static propTypes = {
@@ -18,13 +18,17 @@ class PostListing extends Component {
     getPosts: PropTypes.func.isRequired,
     getMeals: PropTypes.func.isRequired,
     setError: PropTypes.func.isRequired,
+    getAllPosts: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     match: null,
   }
 
-  componentDidMount = () => this.fetchPosts();
+  componentDidMount = () => {
+    this.fetchPosts()
+    this.fetchAllPosts()
+  }
 
   /**
     * Fetch Data from API, saving to Redux
@@ -38,8 +42,20 @@ class PostListing extends Component {
       });
   }
 
+  /**
+    * Fetch Data from API, saving to Redux
+    */
+  fetchAllPosts = () => {
+    return this.props.getAllPosts()
+      .then(() => this.props.getMeals())
+      .catch((err) => {
+        console.log(`Error: ${err}`);
+        return this.props.setError(err);
+      });
+  }
+
   render = () => {
-    const { Layout, posts, match } = this.props;
+    const { Layout, posts, postsAll, match } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
 
     return (
@@ -48,8 +64,10 @@ class PostListing extends Component {
         error={posts.error}
         loading={posts.loading}
         posts={posts.posts}
+        postsAll={posts.postsAll}
         meals={posts.meals}
         reFetch={() => this.fetchPosts()}
+        reFetchAll={() => this.fetchAllPosts()}
       />
     );
   }
@@ -57,11 +75,13 @@ class PostListing extends Component {
 
 const mapStateToProps = state => ({
   posts: state.posts || {},
+  postsAll: state.postsAll || {},
 });
 
 const mapDispatchToProps = {
   getPosts,
   getMeals,
+  getAllPosts,
   setError,
 };
 

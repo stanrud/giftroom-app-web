@@ -14,7 +14,7 @@ export default {
 
   tabProps: {
     swipeEnabled: false,
-    activeBackgroundColor: '#9eddd3',
+    activeBackgroundColor: '#9ef9d3',
     inactiveBackgroundColor: Colors.brandPrimary,
     tabBarStyle: { backgroundColor: Colors.brandPrimary },
   },

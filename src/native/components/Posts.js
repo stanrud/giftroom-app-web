@@ -8,6 +8,7 @@ import Loading from './Loading';
 import Error from './Error';
 import Header from './Header';
 import Spacer from './Spacer';
+import PTRView from 'react-native-pull-to-refresh';
 
 const PostListing = ({
   error,
@@ -26,85 +27,88 @@ const PostListing = ({
 
   const onPress = item => Actions.post({ match: { params: { id: String(item.id) } } });
 
-  this.state = {refreshing: false};
+  var _refresh =  () => {
+    return new Promise(async (resolve) => {
+      await reFetch()
+      return resolve()
+    });
+  }
 
   return (
     <Container>
-      <Content padder>
-        <Header
-          title="GiftRoom"
-          content="All your desired gifts are displayed here"
-        />
+      <PTRView onRefresh={_refresh} >
+        <Content padder>
+          <Header
+            title="GiftRoom"
+            content="All your desired gifts are displayed here"
+          />
 
-        <FlatList
-          numColumns={2}
-          data={posts}
-          renderItem={({ item }) => (
-            <Card transparent style={{ paddingHorizontal: 6 }} key={item.id}>
-              <CardItem cardBody>
-                <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1}}>
-                  <Image
-                    source={{ uri: item.image }}
-                    style={{
-                      height: 200,
-                      width: null,
-                      flex: 1,
-                      borderRadius: 9,
-                    }}
-                  >
+          <FlatList
+            numColumns={2}
+            data={posts}
+            renderItem={({ item }) => (
+              <Card transparent style={{ paddingHorizontal: 6 }} key={item.id}>
+                <CardItem cardBody>
+                  <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1}}>
+                    <Image
+                      source={{ uri: item.image }}
+                      style={{
+                        height: 200,
+                        width: null,
+                        flex: 1,
+                        borderRadius: 9,
+                      }}
+                    >
+                    <Body>
+                    <Spacer size={10} />
+                      <Button transparent>
+                        <Text style={{ color: '#fff', fontWeight: '800' }}>{item.title}</Text>
+                      </Button>
+                    </Body>
+                    </Image>
+                  </TouchableOpacity>
+                </CardItem>
+
+                {/*
+                <CardItem cardBody>
                   <Body>
-                  <Spacer size={10} />
-                    <Button transparent>
-                      <Text style={{ color: '#fff', fontWeight: '800' }}>{item.title}</Text>
+                    <Spacer size={10} />
+                    <Text style={{ fontWeight: '800' }}>{item.title}</Text>
+                    <Spacer size={15} />
+                    <Button
+                      block
+                      bordered
+                      small
+                      onPress={() => onPress(item)}
+                    >
+                      <Text>View Post</Text>
                     </Button>
+                    <Spacer size={5} />
                   </Body>
-                  </Image>
-                </TouchableOpacity>
-              </CardItem>
+                </CardItem>
+                    */}
 
-              {/*
-              <CardItem cardBody>
-                <Body>
-                  <Spacer size={10} />
-                  <Text style={{ fontWeight: '800' }}>{item.title}</Text>
-                  <Spacer size={15} />
-                  <Button
-                    block
-                    bordered
-                    small
-                    onPress={() => onPress(item)}
-                  >
-                    <Text>View Post</Text>
-                  </Button>
-                  <Spacer size={5} />
-                </Body>
-              </CardItem>
-                  */}
-
-            </Card>
-          )}
-          keyExtractor={keyExtractor}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.setState({refreshing: true})}
-              
-            />
-          }
-        />
-
-        <Spacer size={20} />
-      </Content>
-
-          <Fab
-            active={'true'}
-            containerStyle={{}}
-            style={{ backgroundColor: '#555' }}
-            position="bottomRight"
-            onPress={Actions.addpost}>
-            <Icon name="add" style={{ color: '#fff' }} />
-          </Fab>
-
+              </Card>
+            )}
+            keyExtractor={keyExtractor}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={reFetch}
+                
+              />
+            }
+          />
+        </Content>
+      </PTRView>
+      <Fab
+        active={'true'}
+        containerStyle={{}}
+        style={{ backgroundColor: '#9ef9d3' }}
+        position="bottomRight"
+        onPress={Actions.addpost}>
+        <Icon name="add" style={{ color: '#555' }} />
+      </Fab>
     </Container>
   );
 };

@@ -29,6 +29,7 @@ export default function postReducer(state = initialState, action) {
 
       // Pick out the props I need
       if (action.data && typeof action.data === 'object') {
+
         posts = action.data.map(item => ({
           id: item.objectId,
           title: item.title,
@@ -46,6 +47,31 @@ export default function postReducer(state = initialState, action) {
         error: null,
         loading: false,
         posts,
+      };
+    }
+    case 'POSTS_REPLACE_ALL': {
+      let postsAll = [];
+
+      // Pick out the props I need
+      if (action.data && typeof action.data === 'object') {
+
+        postsAll = action.data.map(item => ({
+          id: item.objectId,
+          title: item.title,
+          description: item.description,
+          category: item.category,
+          image: item.file.url,
+          author: item.author,
+          ingredients: item.ingredients,
+          method: item.method,
+        }));
+      }
+
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        postsAll,
       };
     }
     default:

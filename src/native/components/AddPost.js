@@ -25,7 +25,7 @@ class AddPost extends React.Component {
     this.state = {
       title: '',
       description: '',
-      author: '',
+      category: '',
       image: { uri: 'https://i.pinimg.com/originals/d1/37/5f/d1375f83853416fd628157529771142e.jpg', 
             base64: null 
       },
@@ -77,8 +77,8 @@ class AddPost extends React.Component {
               <Input onChangeText={v => this.handleChange('description', v)} />
             </Item>
             <Item stackedLabel>
-              <Label>Author</Label>
-              <Input onChangeText={v => this.handleChange('author', v)}
+              <Label>Category</Label>
+              <Input onChangeText={v => this.handleChange('category', v)}
               />
             </Item>
 

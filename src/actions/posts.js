@@ -94,31 +94,61 @@ export function setError(message) {
 }
 
 /**
-  * Get posts
+  * Get personal posts
   */
 export function getPosts() {
-  return function action(dispatch) {
-    const request = fetch('http://rudiko.com:1337/parse/classes/Posts', {
-          method: "GET",
-          headers: {
-                    'Content-Type': ' application/json',
-                    'X-Parse-Application-Id': 'myAppId',
-                    'X-Parse-REST-API-Key': 'QWERTY!@#$%^'
-                    },
-        })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson;
+    return dispatch => new Promise(async (resolve, reject) => {
+    Parse.User.currentAsync().then(function(user) {
+        // do stuff with your user
+      author = user.toJSON().objectId;
+
+      var Posts = Parse.Object.extend("Posts");
+      var query = new Parse.Query(Posts);
+      query.equalTo("author", author);
+      query.find({
+        success: async (results) => {
+          // Do something with the returned Parse.Object values
+          results = JSON.parse(JSON.stringify(results));
+          await dispatch({
+            type: 'POSTS_REPLACE',
+            data: results,
+          });
+          console.log("Fetched Personal!");
+          return resolve();
+        },
+        error: (error) => {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
     });
-    
-    return request.then(
-      response => dispatch({
-        type: 'POSTS_REPLACE',
-        data: response.results,
-      }),
-      err => dispatch(fetchOffersError(err))
-    );
-  }
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+}
+
+/**
+  * Get ALL posts
+  */
+export function getAllPosts() {
+    return dispatch => new Promise(async (resolve, reject) => {
+        // do stuff with your user
+
+      var Posts = Parse.Object.extend("Posts");
+      var query = new Parse.Query(Posts);
+      query.find({
+        success: async (results) => {
+          // Do something with the returned Parse.Object values
+          results = JSON.parse(JSON.stringify(results));
+          await dispatch({
+            type: 'POSTS_REPLACE_ALL',
+            data: results,
+          });
+          console.log("Fetched All!");
+          return resolve();
+        },
+        error: (error) => {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
 /**
@@ -128,7 +158,7 @@ export function addPost(formData) {
   const {
     title,
     description,
-    author,
+    category,
     image,
   } = formData;
 
@@ -152,22 +182,27 @@ export function addPost(formData) {
     // Validation checks
     var Post = Parse.Object.extend("Posts");
     var post = new Post();
-    //Add post
-    post.set("title", title);
-    post.set("description", description);
-    post.set("author", author);
-    post.set("file", parseFile);
+    
+    Parse.User.currentAsync().then(function(user) {
+        // do stuff with your user
+      author = user.toJSON().objectId;
+      //Add post
+      post.set("title", title);
+      post.set("description", description);
+      post.set("author", author);
+      post.set("file", parseFile);
 
-    post.save(null, {
-      success: async (response) => {
-        console.log("Post added");
-        await statusMessage(dispatch, 'loading', false);
-        return resolve();
-      },
-      error: (user, error) => {
-        // Show the error message somewhere and let the user try again.
-        console.log("Error: " + error.code + " " + error.message);
-      }
-    }).catch(reject);
+      post.save(null, {
+        success: async (response) => {
+          console.log("Post added");
+          await statusMessage(dispatch, 'loading', false);
+          return resolve();
+        },
+        error: (user, error) => {
+          // Show the error message somewhere and let the user try again.
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      }).catch(reject);
+    });
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
