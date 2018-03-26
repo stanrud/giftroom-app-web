@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scene, Tabs, Stack } from 'react-native-router-flux';
-import { Icon } from 'native-base';
+import { Icon, Text } from 'native-base';
 
 import DefaultProps from '../constants/navigation';
 import AppConfig from '../../constants/config';
@@ -40,7 +40,6 @@ const Index = (
         tabBarPosition="bottom"
         showLabel={false}
 
-
         {...DefaultProps.tabProps}
       >
         <Stack
@@ -49,7 +48,7 @@ const Index = (
           icon={() => <Icon ios='ios-people-outline' android="md-people" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="home" component={HomeContainer} Layout={HomeComponent}/>
+          <Scene key="home" component={HomeContainer} Layout={HomeComponent} onEnter={() => {HomeComponent._refresh()}}/>
         </Stack>
 
         <Stack
@@ -61,17 +60,18 @@ const Index = (
           <Scene key="posts" component={PostsContainer} Layout={PostsComponent} />
         
           <Scene
-              key="addpost"
-              title="ADDPOST"
-              {...DefaultProps.navbarProps}
-              component={AddPostContainer}
-              Layout={AddPostComponent}
-            />
+            key="addpost"
+            title="ADDPOST"
+            {...DefaultProps.navbarProps}
+            component={AddPostContainer}
+            Layout={AddPostComponent}
+          />
         </Stack>
 
         <Stack
           key="profile"
           title="PROFILE"
+          hideNavBar="true"
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >

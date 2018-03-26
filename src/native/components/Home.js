@@ -23,7 +23,7 @@ const PostListing = ({
   // Loading
   if (loading) return <Loading />;
 
-  componentDidMount = () => reFetch();
+  componentDidMount = () => reFetchAll();
 
   // Error
   if (error) return <Error content={error} />;
@@ -35,7 +35,7 @@ const PostListing = ({
   var _refresh =  () => {
     return new Promise(async (resolve) => {
       await reFetchAll()
-      return setTimeout(() => {resolve()}, 2000)
+      return resolve()
     });
   }
 
