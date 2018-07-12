@@ -15,7 +15,7 @@ const PostListing = ({
   loading,
   posts,
   reFetch,
-  meals
+  meals,
 }) => {
   // Loading
   if (loading) return <Loading />;
@@ -27,12 +27,12 @@ const PostListing = ({
 
   const onPress = item => Actions.post({ match: { params: { id: String(item.id) } } });
 
-  var _refresh =  () => {
+  const _refresh = () => {
     return new Promise(async (resolve) => {
-      await reFetch()
-      return resolve()
+      await reFetch();
+      resolve();
     });
-  }
+  };
 
   return (
     <Container>
@@ -59,12 +59,12 @@ const PostListing = ({
                         borderRadius: 9,
                       }}
                     >
-                    <Body>
-                    <Spacer size={10} />
-                      <Button transparent>
-                        <Text style={{ color: '#fff', fontWeight: '800' }}>{item.title}</Text>
-                      </Button>
-                    </Body>
+                      <Body>
+                        <Spacer size={10} />
+                        <Button transparent>
+                          <Text style={{ color: '#fff', fontWeight: '800' }}>{item.title}</Text>
+                        </Button>
+                      </Body>
                     </Image>
                   </TouchableOpacity>
                 </CardItem>
@@ -95,7 +95,6 @@ const PostListing = ({
               <RefreshControl
                 refreshing={loading}
                 onRefresh={reFetch}
-                
               />
             }
           />

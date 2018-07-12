@@ -1,6 +1,6 @@
 import { Permissions, Notifications } from 'expo';
 
-//const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
+// const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
 
 async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Permissions.getAsync(

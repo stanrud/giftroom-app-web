@@ -1,7 +1,6 @@
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
-
 import { AsyncStorage } from 'react-native';
 var Parse = require('parse/react-native');
 Parse.setAsyncStorage(AsyncStorage);
@@ -97,30 +96,30 @@ export function setError(message) {
   * Get personal posts
   */
 export function getPosts() {
-    return dispatch => new Promise(async (resolve, reject) => {
-    Parse.User.currentAsync().then(function(user) {
-        // do stuff with your user
-      author = user.toJSON().objectId;
+  return dispatch => new Promise(async (resolve, reject) => {
+    Parse.User.currentAsync().then(((user) => {
+      // do stuff with your user
+      const author = user.toJSON().objectId;
 
-      var Posts = Parse.Object.extend("Posts");
-      var query = new Parse.Query(Posts);
-      query.equalTo("author", author);
+      const Posts = Parse.Object.extend('Posts');
+      const query = new Parse.Query(Posts);
+      query.equalTo('author', author);
       query.find({
-        success: async (results) => {
+        success: async (data) => {
           // Do something with the returned Parse.Object values
-          results = JSON.parse(JSON.stringify(results));
+          const results = JSON.parse(JSON.stringify(data));
           await dispatch({
             type: 'POSTS_REPLACE',
             data: results,
           });
-          console.log("Fetched Personal!");
+          console.log('Fetched Personal!');
           return resolve();
         },
         error: (error) => {
-          console.log("Error: " + error.code + " " + error.message);
-        }
+          console.log(error.message);
+        },
       });
-    });
+    }));
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
@@ -128,26 +127,25 @@ export function getPosts() {
   * Get ALL posts
   */
 export function getAllPosts() {
-    return dispatch => new Promise(async (resolve, reject) => {
-        // do stuff with your user
-
-      var Posts = Parse.Object.extend("Posts");
-      var query = new Parse.Query(Posts);
-      query.find({
-        success: async (results) => {
-          // Do something with the returned Parse.Object values
-          results = JSON.parse(JSON.stringify(results));
-          await dispatch({
-            type: 'POSTS_REPLACE_ALL',
-            data: results,
-          });
-          console.log("Fetched All!");
-          return resolve();
-        },
-        error: (error) => {
-          console.log("Error: " + error.code + " " + error.message);
-        }
-      });
+  return dispatch => new Promise(async (resolve, reject) => {
+  // do stuff with your user
+    const Posts = Parse.Object.extend('Posts');
+    const query = new Parse.Query(Posts);
+    query.find({
+      success: async (data) => {
+        // Do something with the returned Parse.Object values
+        const results = JSON.parse(JSON.stringify(data));
+        await dispatch({
+          type: 'POSTS_REPLACE_ALL',
+          data: results,
+        });
+        console.log('Fetched All!');
+        return resolve();
+      },
+      error: (error) => {
+        console.log(error.message);
+      },
+    });
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
