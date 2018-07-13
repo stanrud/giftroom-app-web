@@ -26,8 +26,8 @@ class PostListing extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchPosts()
-    this.fetchAllPosts()
+    this.fetchPosts();
+    this.fetchAllPosts();
   }
 
   /**
