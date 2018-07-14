@@ -3,10 +3,12 @@ import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 
 import { AsyncStorage } from 'react-native';
-var Parse = require('parse/react-native');
+
+const Parse = require('parse/react-native');
+
 Parse.setAsyncStorage(AsyncStorage);
-Parse.initialize("myAppId", "QWERTY!@#$%^");
-Parse.serverURL = "http://rudiko.com:1337/parse";
+Parse.initialize('myAppId', 'QWERTY!@#$%^');
+Parse.serverURL = 'http://rudiko.com:1337/parse';
 
 /**
   * Sign Up to Parse
@@ -31,34 +33,34 @@ export function signUp(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    var user = new Parse.User();
-      user.set("username", firstName);
-      user.set("firstName", firstName);
-      user.set("lastName", firstName);
-      user.set("password", password);
-      user.set("email", email);
+    const user = new Parse.User();
+    user.set('username', firstName);
+    user.set('firstName', firstName);
+    user.set('lastName', firstName);
+    user.set('password', password);
+    user.set('email', email);
 
-      user.signUp(null, {
-        success: async (user) => {
-          await statusMessage(dispatch, 'loading', false);
-          return resolve();
-        },
-        error: (user, error) => {
-          // Show the error message somewhere and let the user try again.
-          alert("Error: " + error.code + " " + error.message);
-        }
-      }).catch(reject);
-    }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+    user.signUp(null, {
+      success: async () => {
+        await statusMessage(dispatch, 'loading', false);
+        return resolve();
+      },
+      error: (error) => {
+        // Show the error message somewhere and let the user try again.
+        console.log(error.message);
+      },
+    }).catch(reject);
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 /**
   * Get this User's Details
   */
 function getUserData(dispatch) {
-  
-  //Go to PARSE
-  return Parse.User.currentAsync().then(function(user) {
+
+  // Go to PARSE
+  return Parse.User.currentAsync().then((user) => {
     // do stuff with your user
-    var userData = JSON.stringify(user);
+    let userData = JSON.stringify(user);
     userData = JSON.parse(userData);
     return dispatch({
       type: 'USER_DETAILS_UPDATE',
@@ -76,7 +78,6 @@ export function getMemberData() {
       if (loggedIn) {
         return resolve(getUserData(dispatch));
       }
-
       return () => new Promise(() => resolve());
     });
   });
@@ -98,14 +99,14 @@ export function login(formData) {
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
 
-    //Go to PARSE
+    // Go to PARSE
     return Parse.User.logIn(email, password, {
       success: async (user) => {
 
         await getUserData(dispatch);
         await statusMessage(dispatch, 'loading', false);
         // Send Login data to Redux
-        var userData = JSON.stringify(user);
+        let userData = JSON.stringify(user);
         userData = JSON.parse(userData);
 
         return resolve(dispatch({
@@ -116,7 +117,7 @@ export function login(formData) {
       error: (user, error) => {
         // The login failed. Check error to see why.
         console.log(error);
-      }
+      },
     }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
@@ -135,16 +136,16 @@ export function resetPassword(formData) {
 
     // Go to PARSE
     Parse.User.requestPasswordReset(email, {
-      success: async function() {
+      success: async () => {
         // Password reset request was sent successfully
-        console.log("reset passss");
-        await statusMessage(dispatch, 'loading', false);      
+        console.log('reset passss');
+        await statusMessage(dispatch, 'loading', false);
         return resolve(dispatch({ type: 'USER_RESET' }));
       },
-      error: function(error) {
+      error: (error) => {
         // Show the error message somewhere
-        alert("Error: " + error.code + " " + error.message);
-      }
+        console.log(error.message);
+      },
     }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
@@ -208,7 +209,7 @@ export function updateProfile(formData) {
   */
 export function logout() {
   return dispatch => new Promise((resolve, reject) => {
-    //Go to PARSE
+    // Go to PARSE
     Parse.User.logOut()
       .then(() => {
         dispatch({ type: 'USER_RESET' });

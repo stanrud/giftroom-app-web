@@ -1,7 +1,7 @@
+import { AsyncStorage } from 'react-native';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
-import { AsyncStorage } from 'react-native';
 
 const Parse = require('parse/react-native');
 
@@ -115,7 +115,7 @@ export function getPosts() {
           console.log(error.message);
         },
       });
-    }));
+    })).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
