@@ -130,7 +130,6 @@ export function getAllPosts() {
           type: 'POSTS_REPLACE_ALL',
           data: results,
         });
-        console.log(results);
         return resolve();
       },
       error: (error) => {

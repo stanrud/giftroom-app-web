@@ -7,8 +7,8 @@ export default {
       description: '---- ---- -----',
       file: {
         __type: '----',
-        name: 'b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
-        url: 'http://rudiko.com:1337/parse/files/myAppId/b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+        name: 'app-icon.png',
+        url: '/src/images/app-icon.png',
       },
       objectId: 0,
       title: '-------',
@@ -26,8 +26,8 @@ export default {
       category: 1,
       file: {
         __type: '----',
-        name: 'b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
-        url: 'http://rudiko.com:1337/parse/files/myAppId/b28a04e8718378ed91951ed8ebd6b050_photo.jpg',
+        name: 'app-icon.png',
+        url: '/src/images/app-icon.png',
       },
       ingredients: [
         '---- --- -- ------',

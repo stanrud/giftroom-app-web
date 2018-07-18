@@ -50,7 +50,6 @@ export function signUp(formData) {
   * Get this User's Details
   */
 function getUserData(dispatch) {
-
   // Go to PARSE
   return Parse.User.currentAsync().then((user) => {
     // do stuff with your user
@@ -64,11 +63,9 @@ function getUserData(dispatch) {
 }
 
 export function getMemberData() {
-  if (Firebase === null) return () => new Promise(resolve => resolve());
-
-  // Ensure token is up to date
+  // Check current user
   return dispatch => new Promise((resolve) => {
-    Firebase.auth().onAuthStateChanged((loggedIn) => {
+    Parse.User.current((loggedIn) => {
       if (loggedIn) {
         return resolve(getUserData(dispatch));
       }
