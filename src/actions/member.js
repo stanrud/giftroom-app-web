@@ -2,13 +2,7 @@ import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 
-import { AsyncStorage } from 'react-native';
-
-const Parse = require('parse/react-native');
-
-Parse.setAsyncStorage(AsyncStorage);
-Parse.initialize('myAppId', 'QWERTY!@#$%^');
-Parse.serverURL = 'http://rudiko.com:1337/parse';
+const { Parse } = require('../constants/parse');
 
 /**
   * Sign Up to Parse

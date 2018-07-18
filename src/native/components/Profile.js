@@ -20,84 +20,84 @@ const canvasPic = {
 
 const Profile = ({ member, logout }) => (
   <Container>
-      <Image source={ canvasPic } style={ styles.canvas } blurRadius={0} />
-        <Card style={ styles.card }>
-          <View style={ styles.meInfo }>
-            <Image source={ mePic } style={ styles.mePic } />
-            <Text style={ styles.meName }>{ member.firstName + ' ' + member.lastName }</Text>
-          </View>
-          <View style={ styles.meInfoWrap }>
-            <View style={{ flex: 1 }}>
-              <View style={ styles.meData }>
-                <View style={ styles.data }>
-                  <Text style={{ fontWeight: 'bold' }}>22</Text>
-                  <Text style={{ fontSize: 12, color: '#777' }}>posts</Text>
-                </View>
+    <Image source={ canvasPic } style={ styles.canvas } blurRadius={0} />
+    <Card style={ styles.card }>
+      <View style={ styles.meInfo }>
+        <Image source={ mePic } style={ styles.mePic } />
+        <Text style={ styles.meName }>{ member.firstName + ' ' + member.lastName }</Text>
+      </View>
+      <View style={ styles.meInfoWrap }>
+        <View style={{ flex: 1 }}>
+          <View style={ styles.meData }>
+            <View style={ styles.data }>
+              <Text style={{ fontWeight: 'bold' }}>22</Text>
+              <Text style={{ fontSize: 12, color: '#777' }}>posts</Text>
+            </View>
 
-                <View style={ styles.data }>
-                  <Text style={{ fontWeight: 'bold' }}>204</Text>
-                  <Text style={{ fontSize: 12, color: '#777' }}>followers</Text>
-                </View>
+            <View style={ styles.data }>
+              <Text style={{ fontWeight: 'bold' }}>204</Text>
+              <Text style={{ fontSize: 12, color: '#777' }}>followers</Text>
+            </View>
 
-                <View style={ styles.data }>
-                  <Text style={{ fontWeight: 'bold' }}>22</Text>
-                  <Text style={{ fontSize: 12, color: '#777' }}>following</Text>
-                </View>
-              </View>
+            <View style={ styles.data }>
+              <Text style={{ fontWeight: 'bold' }}>22</Text>
+              <Text style={{ fontSize: 12, color: '#777' }}>following</Text>
             </View>
           </View>
-          <View>
-            <List style={ styles.listButtons }>
-              {(member && member.email) ?
-                <View>
-                  <ListItem onPress={Actions.updateProfile} icon>
-                    <Left>
-                      <Icon name="person-add" />
-                    </Left>
-                    <Body>
-                      <Text>Update My Profile</Text>
-                    </Body>
-                  </ListItem>
-                  <ListItem onPress={logout} icon>
-                    <Left>
-                      <Icon name="power" />
-                    </Left>
-                    <Body>
-                      <Text>Logout</Text>
-                    </Body>
-                  </ListItem>
-                </View>
-                :
-                <View>
-                  <ListItem onPress={Actions.login} icon>
-                    <Left>
-                      <Icon name="power" />
-                    </Left>
-                    <Body>
-                      <Text>Login</Text>
-                    </Body>
-                  </ListItem>
-                  <ListItem onPress={Actions.signUp} icon>
-                    <Left>
-                      <Icon name="add-circle" />
-                    </Left>
-                    <Body>
-                      <Text>Sign Up</Text>
-                    </Body>
-                  </ListItem>
-                  <ListItem onPress={Actions.forgotPassword} icon>
-                    <Left>
-                      <Icon name="help-buoy" />
-                    </Left>
-                    <Body>
-                      <Text>Forgot Password</Text>
-                    </Body>
-                  </ListItem>
-                </View>
-              }
-            </List>
-          </View>
-        </Card>
+        </View>
+      </View>
+      <View>
+        <List style={ styles.listButtons }>
+          {(member && member.email) ?
+            <View>
+              <ListItem onPress={Actions.updateProfile} icon>
+                <Left>
+                  <Icon name="person-add" />
+                </Left>
+                <Body>
+                  <Text>Update My Profile</Text>
+                </Body>
+              </ListItem>
+              <ListItem onPress={logout} icon>
+                <Left>
+                  <Icon name="power" />
+                </Left>
+                <Body>
+                  <Text>Logout</Text>
+                </Body>
+              </ListItem>
+            </View>
+            :
+            <View>
+              <ListItem onPress={Actions.login} icon>
+                <Left>
+                  <Icon name="power" />
+                </Left>
+                <Body>
+                  <Text>Login</Text>
+                </Body>
+              </ListItem>
+              <ListItem onPress={Actions.signUp} icon>
+                <Left>
+                  <Icon name="add-circle" />
+                </Left>
+                <Body>
+                  <Text>Sign Up</Text>
+                </Body>
+              </ListItem>
+              <ListItem onPress={Actions.forgotPassword} icon>
+                <Left>
+                  <Icon name="help-buoy" />
+                </Left>
+                <Body>
+                  <Text>Forgot Password</Text>
+                </Body>
+              </ListItem>
+            </View>
+          }
+        </List>
+      </View>
+    </Card>
   </Container>
 );
 

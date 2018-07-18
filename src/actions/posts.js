@@ -1,13 +1,8 @@
-import { AsyncStorage } from 'react-native';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 
-const Parse = require('parse/react-native');
-
-Parse.setAsyncStorage(AsyncStorage);
-Parse.initialize('myAppId', 'QWERTY!@#$%^');
-Parse.serverURL = 'http://rudiko.com:1337/parse';
+const { Parse } = require('../constants/parse');
 
 /**
   * Get this User's Favourite posts
@@ -135,7 +130,7 @@ export function getAllPosts() {
           type: 'POSTS_REPLACE_ALL',
           data: results,
         });
-        console.log('Fetched All!');
+        console.log(results);
         return resolve();
       },
       error: (error) => {
