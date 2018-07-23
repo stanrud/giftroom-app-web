@@ -10,6 +10,7 @@ import { View,
 import { Container, Content, List, ListItem, Body, Left, Text, Icon, Card } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Header from './Header';
+import ProfileButtons from './ProfileButtons';
 
 const mePic = {
   uri: 'https://mostbeautiful.files.wordpress.com/2016/03/6992255-ariadne-artiles.jpg?w=625&h=390',
@@ -47,6 +48,12 @@ const Profile = ({ member, logout }) => (
         </View>
       </View>
       <View>
+        <View style={styles.iconContainer}>
+          <ProfileButtons value={1} label={'Bedrooms'} icon={require('../../images/app-icon.png')} />
+          <ProfileButtons value={2} label={'Bathrooms'} icon={require('../../images/app-icon.png')} />
+          <ProfileButtons value={3} label={'Square'} icon={require('../../images/app-icon.png')} />
+        </View>
+
         <List style={ styles.listButtons }>
           {(member && member.email) ?
             <View>
@@ -160,6 +167,11 @@ const styles = StyleSheet.create({
   },
   listButtons: {
     width: '90%',
+  },
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
