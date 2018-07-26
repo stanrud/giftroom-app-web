@@ -75,10 +75,10 @@ const Index = (
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene 
-            key="profileHome" 
-            component={MemberContainer} 
-            Layout={ProfileComponent} 
+          <Scene
+            key="profileHome"
+            component={MemberContainer}
+            Layout={ProfileComponent}
           />
           <Scene
             back

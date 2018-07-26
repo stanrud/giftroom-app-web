@@ -8,21 +8,28 @@ const { Parse } = require('../constants/parse');
   * Get this User's Favourite posts
   */
 export function getFavourites(dispatch) {
-  if (Firebase === null) return () => new Promise(resolve => resolve());
+  Parse.User.currentAsync().then(((user) => {
+    // do stuff with your user
+    const author = user.toJSON().objectId;
 
-  const UID = Firebase.auth().currentUser.uid;
-  if (!UID) return false;
-
-  const ref = FirebaseRef.child(`favourites/${UID}`);
-
-  return ref.on('value', (snapshot) => {
-    const favs = snapshot.val() || [];
-
-    return dispatch({
-      type: 'FAVOURITES_REPLACE',
-      data: favs,
+    const Posts = Parse.Object.extend('Posts');
+    const query = new Parse.Query(Posts);
+    query.equalTo('author', author);
+    query.find({
+      success: async (data) => {
+        // Do something with the returned Parse.Object values
+        const results = JSON.parse(JSON.stringify(data));
+        console.log(results);
+        await dispatch({
+          type: 'FAVOURITES_REPLACE',
+          data: results,
+        });
+      },
+      error: (error) => {
+        console.log(error.message);
+      },
     });
-  });
+  }));
 }
 
 /**
