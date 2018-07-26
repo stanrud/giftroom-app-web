@@ -133,6 +133,7 @@ export function getAllPosts() {
       success: async (data) => {
         // Do something with the returned Parse.Object values
         const results = JSON.parse(JSON.stringify(data));
+        console.log(results);
         await dispatch({
           type: 'POSTS_REPLACE_ALL',
           data: results,
