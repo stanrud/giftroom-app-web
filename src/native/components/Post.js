@@ -24,7 +24,7 @@ const PostView = ({
   if (!post) return <Error content={ErrorMessages.post404} />;
   // Build Ingredients listing
   if (!post.ingredients) return <Error content={ErrorMessages.post404} />;
-  
+
   const ingredients = post.ingredients.map(item => (
     <ListItem key={item} rightIcon={{ style: { opacity: 0 } }}>
       <Text>{item}</Text>
@@ -41,7 +41,7 @@ const PostView = ({
   return (
     <Container>
       <Content padder>
-        <Image source={{ uri: post.image }} style={{ height: 100, width: null, flex: 1 }} />
+        <Image source={{ uri: post.image }} style={{ height: 300, width: null, flex: 1 }} />
 
         <Spacer size={25} />
         <H3>{post.title}</H3>
@@ -66,7 +66,7 @@ const PostView = ({
           <CardItem>
             <Content>
               <List>
-                {ingredients}
+                {ingredients || null}
               </List>
             </Content>
           </CardItem>
@@ -78,7 +78,7 @@ const PostView = ({
           </CardItem>
           <CardItem>
             <List>
-              {method}
+              {method || null}
             </List>
           </CardItem>
         </Card>

@@ -26,8 +26,9 @@ class AddPost extends React.Component {
       title: '',
       description: '',
       category: '',
-      image: { uri: 'https://i.pinimg.com/originals/d1/37/5f/d1375f83853416fd628157529771142e.jpg', 
-            base64: null 
+      image: {
+        uri: 'https://i.pinimg.com/originals/d1/37/5f/d1375f83853416fd628157529771142e.jpg',
+        base64: null,
       },
     };
 
@@ -48,9 +49,22 @@ class AddPost extends React.Component {
       .catch(e => console.log(`Error: ${e}`));
   }
 
+  _pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true,
+    });
+    if (!result.cancelled) {
+      this.setState({
+        image: { uri: result.uri, base64: result.base64 }
+      });
+    }
+  };
+
   render() {
     const { loading, error } = this.props;
-    let { image } = this.state;
+    const { image } = this.state;
     // Loading
     if (loading) return <Loading />;
 
@@ -78,12 +92,11 @@ class AddPost extends React.Component {
             </Item>
             <Item stackedLabel>
               <Label>Category</Label>
-              <Input onChangeText={v => this.handleChange('category', v)}
-              />
+              <Input onChangeText={v => this.handleChange('category', v)} />
             </Item>
 
             <Spacer size={20} />
-              {error && <Messages message={error} />}
+            {error && <Messages message={error} />}
             <Spacer size={20} />
 
             <Button block onPress={this.handleSubmit}>
@@ -94,22 +107,6 @@ class AddPost extends React.Component {
       </Container>
     );
   }
-
-  _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      base64: true,
-    });
-
-    //console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ 
-        image: { uri: result.uri, base64: result.base64 }
-      });
-    }
-  };
 }
 
 export default AddPost;

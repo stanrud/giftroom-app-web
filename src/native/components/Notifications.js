@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  Notifications,
-} from 'expo';
-import {
-  Text,
-  View,
-} from 'react-native';
+import { Notifications } from 'expo';
+import { Text, View } from 'react-native';
 
 import registerForPushNotificationsAsync from 'registerForPushNotificationsAsync';
 

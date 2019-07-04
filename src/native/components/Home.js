@@ -19,11 +19,10 @@ const PostListing = ({
   reFetchAll,
   meals
 }) => {
-
   // Loading
   if (loading) return <Loading />;
 
-  componentDidMount = () => reFetchAll();
+  // componentDidMount = () => reFetchAll();
 
   // Error
   if (error) return <Error content={error} />;
@@ -32,16 +31,16 @@ const PostListing = ({
 
   const onPress = item => Actions.post({ match: { params: { id: String(item.id) } } });
 
-  var _refresh =  () => {
+  const refresh = () => {
     return new Promise(async (resolve) => {
-      await reFetchAll()
-      return resolve()
+      await reFetchAll();
+      return resolve();
     });
-  }
+  };
 
   return (
     <Container>
-      <PTRView onRefresh={_refresh} offset={60}>
+      <PTRView onRefresh={refresh} offset={60}>
         <Content padder>
           <Header
             title="FEED"
@@ -64,22 +63,18 @@ const PostListing = ({
                         borderRadius: 9,
                       }}
                     >
-                    <Left>
-                    <Body>
-                      <Button transparent>
-                        <Thumbnail source={{uri: 'https://avatars3.githubusercontent.com/u/7645498?s=460&v=4'}} />
-                        <Text style={{ color: '#fff' }}>Stan Rud</Text>
-                      </Button>
-                    </Body>
-                    </Left>
-                    <Left>
-                      <Body>
+                      <Body style={{ display: 'flex', flexDirection: 'row', marginTop: 12, marginLeft: 8 }}>
+                        <Button transparent>
+                          <Thumbnail style={{ borderWidth: 0.5, borderColor: 'white' }} source={{uri: 'https://avatars3.githubusercontent.com/u/7645498?s=460&v=4'}} />
+                          <Text style={{ color: '#fff', textShadowColor: 'rgba(0, 0, 0, 0.75)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 1 }}>Stan Rud</Text>
+                        </Button>
+                      </Body>
+                      <Body style={{ display: 'flex', flexDirection: 'row', bottom: 12, marginLeft: 8 }}>
                         <Button transparent>
                           <Icon active name="thumbs-up" style={{ color: '#fff' }} />
                           <Text style={{ color: '#fff' }} >12</Text>
                         </Button>
                       </Body>
-                    </Left>
                     </Image>
                   </TouchableOpacity>
                 </CardItem>

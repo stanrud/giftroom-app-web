@@ -4,6 +4,9 @@
     "name": "GiftRoom",
     "slug": "giftroom-app",
     "icon": "src/images/app-icon.png",
-    "privacy": "public"
+    "privacy": "public",
+    "ios": {
+     "bundleIdentifier": "com.stanrud.giftroom"
+    }
   }
 }

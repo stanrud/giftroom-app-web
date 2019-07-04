@@ -48,7 +48,7 @@ const Index = (
           icon={() => <Icon ios='ios-people-outline' android="md-people" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="home" component={HomeContainer} Layout={HomeComponent} onEnter={() => {HomeComponent._refresh()}}/>
+          <Scene key="home" component={HomeContainer} Layout={HomeComponent} />
         </Stack>
 
         <Stack
@@ -75,10 +75,10 @@ const Index = (
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene 
-            key="profileHome" 
-            component={MemberContainer} 
-            Layout={ProfileComponent} 
+          <Scene
+            key="profileHome"
+            component={MemberContainer}
+            Layout={ProfileComponent}
           />
           <Scene
             back
